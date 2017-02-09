@@ -1,9 +1,11 @@
 // example
-package gosnmptrap
+package main
 
 import (
 	"fmt"
 	"net"
+
+    "github.com/ebookbug/gosnmptrap"
 )
 
 func main() {
@@ -21,12 +23,12 @@ func main() {
 		buf := make([]byte,2048)
 		read,from,_:=socket.ReadFromUDP(buf)
 		fmt.Println("Get msg from ",from.IP)
-		go HandleUdp(buf[:read])
+		go gosnmptrap.HandleUdp(buf[:read])
 	}
 }
 
 func HandleUdp(data []byte){
-	trap,err := ParseUdp(data)
+	trap,err := gosnmptrap.ParseUdp(data)
 	if err !=nil{
 		fmt.Println("Err",err.Error())
 	}
